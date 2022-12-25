@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     private Vector3 orgPos;
 
-    MeshTest testMesh;
+    //MeshTest testMesh;
 
     void Start()
     {
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         attacked = false;
         hp = maxHp;
 
-        testMesh = GetComponentInChildren<MeshTest>();
+        //testMesh = GetComponentInChildren<MeshTest>();
     }
 
     private void Update()
@@ -69,7 +69,8 @@ public class Player : MonoBehaviour
 
         int layerMask = ~LayerMask.GetMask("Player");
 
-        vertices.Add(startPos);
+        //vertices.Add(startPos);
+        vertices.Add(new Vector3(0f, 0f, 0f));
 
         for (int i = 0; i < 360 / angle; i += 1)
         {
@@ -80,12 +81,12 @@ public class Player : MonoBehaviour
             if (hit.collider != null)
             {
                 //vertices[i] = new Vector3(hit.point.x, hit.point.y, 0f);
-                vertices.Add(new Vector3(hit.point.x, hit.point.y, 0f));
+                vertices.Add(new Vector3(hit.point.x - this.transform.position.x, hit.point.y - this.transform.position.y, 0f));
             }
             else
             {
                 //vertices[i] = new Vector3(targetPos.x, targetPos.y, 0f);
-                vertices.Add(new Vector3(targetPos.x, targetPos.y, 0f));
+                vertices.Add(new Vector3(targetPos.x - this.transform.position.x, targetPos.y - this.transform.position.y, 0f));
             }
 
         }
@@ -93,11 +94,13 @@ public class Player : MonoBehaviour
         foreach (Vector3 vertex in vertices)
         {
             //Debug.Log(vertex);
-            Debug.DrawRay(this.transform.position, new Vector3(vertex.x, vertex.y, 0) - this.transform.position, Color.red, 15);
+            //Debug.DrawRay(this.transform.position, new Vector3(vertex.x, vertex.y, 0) - this.transform.position, Color.red, 15);
+            Debug.DrawRay(this.transform.position, new Vector3(vertex.x, vertex.y, 0), Color.red, 5);
         }
 
-        testMesh.PolyMesh(vertices);
-        testMesh.gameObject.SetActive(true);
+        //testMesh.PolyMesh(vertices);
+        //testMesh.gameObject.SetActive(true);
+        area.GetComponent<Area>().PolyMesh(vertices);
     }
 
     // The mesh goes red when the mouse is over it...
@@ -130,7 +133,7 @@ public class Player : MonoBehaviour
         {
             area.SetActive(false);
             range.SetActive(false);
-            testMesh.gameObject.SetActive(false);
+            //testMesh.gameObject.SetActive(false);
         }
         
         //Debug.Log("Mouse Exit");
