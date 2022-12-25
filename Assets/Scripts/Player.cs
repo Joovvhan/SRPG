@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
 
     private Vector3 orgPos;
 
+    MeshTest testMesh;
+
     void Start()
     {
         area.SetActive(false);
@@ -27,6 +29,8 @@ public class Player : MonoBehaviour
         selected = false;
         attacked = false;
         hp = maxHp;
+
+        testMesh = GetComponentInChildren<MeshTest>();
     }
 
     private void Update()
@@ -57,13 +61,15 @@ public class Player : MonoBehaviour
 
     void DrawMovableArea()
     {
-        float angle = 3;
+        float angle = 1;
 
         Vector3 startPos = this.transform.position;
 
-        Vector2[] vertices = new Vector2[(int)(360/angle)];
+        List<Vector3> vertices = new List<Vector3>((int)(360/angle));
 
         int layerMask = ~LayerMask.GetMask("Player");
+
+        vertices.Add(startPos);
 
         for (int i = 0; i < 360 / angle; i += 1)
         {
@@ -73,20 +79,25 @@ public class Player : MonoBehaviour
             RaycastHit2D hit = Physics2D.Linecast(startPos, targetPos, layerMask);
             if (hit.collider != null)
             {
-                vertices[i] = new Vector2(hit.point.x, hit.point.y);
+                //vertices[i] = new Vector3(hit.point.x, hit.point.y, 0f);
+                vertices.Add(new Vector3(hit.point.x, hit.point.y, 0f));
             }
             else
             {
-                vertices[i] = new Vector2(targetPos.x, targetPos.y);
+                //vertices[i] = new Vector3(targetPos.x, targetPos.y, 0f);
+                vertices.Add(new Vector3(targetPos.x, targetPos.y, 0f));
             }
+
         }
 
-        foreach (Vector2 vertex in vertices)
+        foreach (Vector3 vertex in vertices)
         {
             //Debug.Log(vertex);
             Debug.DrawRay(this.transform.position, new Vector3(vertex.x, vertex.y, 0) - this.transform.position, Color.red, 15);
         }
 
+        testMesh.PolyMesh(vertices);
+        testMesh.gameObject.SetActive(true);
     }
 
     // The mesh goes red when the mouse is over it...
@@ -119,7 +130,9 @@ public class Player : MonoBehaviour
         {
             area.SetActive(false);
             range.SetActive(false);
+            testMesh.gameObject.SetActive(false);
         }
+        
         //Debug.Log("Mouse Exit");
         //rend.material.color = Color.white;
     }

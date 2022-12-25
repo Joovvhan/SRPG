@@ -8,16 +8,10 @@ public class MeshTest : MonoBehaviour
 
     void Start()
     {
-        polyCollider = GetComponent<PolygonCollider2D>();
-        PolyMesh(1f, 36);
-    }
 
-    void PolyMesh(float radius, int n)
-    {
-        MeshFilter mf = GetComponent<MeshFilter>();
-        Mesh mesh = new Mesh();
-        mf.mesh = mesh;
-
+        float radius = 1f;
+        //int n = 36;
+        int n = 18;
         //verticies
         List<Vector3> verticiesList = new List<Vector3> { };
         float x;
@@ -28,16 +22,37 @@ public class MeshTest : MonoBehaviour
             y = radius * Mathf.Cos((2 * Mathf.PI * i) / n);
             verticiesList.Add(new Vector3(x, y, 0f));
         }
+
+        polyCollider = GetComponent<PolygonCollider2D>();
+        PolyMesh(verticiesList);
+    }
+
+    public void PolyMesh(List<Vector3> verticiesList)
+    {
+        MeshFilter mf = GetComponent<MeshFilter>();
+        Mesh mesh = new Mesh();
+        mf.mesh = mesh;
+
+        MeshRenderer mr = GetComponent<MeshRenderer>();
+        mr.material.color = new Color(0.0f, 1.0f, 1.0f, 0.1f);
+
         Vector3[] verticies = verticiesList.ToArray();
+        int n = verticies.Length;
 
         //triangles
         List<int> trianglesList = new List<int> { };
         for (int i = 0; i < (n - 2); i++)
         {
             trianglesList.Add(0);
+            //trianglesList.Add(i);
             trianglesList.Add(i + 1);
             trianglesList.Add(i + 2);
         }
+
+        trianglesList.Add(0);
+        trianglesList.Add(1);
+        trianglesList.Add(n-1);
+
         int[] triangles = trianglesList.ToArray();
 
         //normals
@@ -64,6 +79,14 @@ public class MeshTest : MonoBehaviour
         Vector2[] path = pathList.ToArray();
 
         polyCollider.SetPath(0, path);
+    }
+
+    void OnMouseDown()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+        Debug.Log("Debugging from test mesh: " + worldPosition.ToString());
+
     }
 }
 
