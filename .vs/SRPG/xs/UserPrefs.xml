@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{568B1F9B-85C1-2F21-6BFC-765D3980929D}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MeshTest.cs">
+    <Files>
+      <File FileName="Assets/GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Player.cs" Line="89" Column="1" />
+      <File FileName="Assets/Scripts/Area.cs" Line="37" Column="31" />
+      <File FileName="Assets/Scripts/Range.cs" Line="33" Column="34" />
+      <File FileName="Assets/MeshTest.cs" Line="24" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4c784d00-77c7-46a5-b774-acbecffbaaf4" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
